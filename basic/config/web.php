@@ -19,19 +19,39 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
+        /*'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-        ],
+        ],*/
+
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        /*
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
+        ],
+        */
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.163.com',
+                'username' => 'yjjjng0901@163.com',
+                'password' => "yejingjing0901",
+                'port' => '587',
+                'encryption' => 'ssl',
+            ],
+            /*'messageConfig'=>[
+                'charset'=>'UTF-8',
+                'from'=>['yjjjng0901@163.com'=>'admin']
+            ],*/
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -51,6 +71,25 @@ $config = [
             ],
         ],
 
+    ],
+    /*'user' => [
+        'class' => 'dektrium\user\Module',
+        'enableUnconfirmedLogin' => true,
+        //'confirmWithin' => 21600,
+        //'cost' => 12,
+        //'admins' => ['admin']
+    ],*/
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableUnconfirmedLogin' => true,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            /*'modelMap' => [
+                'User' => 'app\models\User',
+            ],*/
+            'admins' => ['admin']
+        ],
     ],
     'params' => $params,
 ];
