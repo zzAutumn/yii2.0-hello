@@ -12,7 +12,25 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
+    <?//= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
+
+    <!-- use redactor text editor -->
+    <!-- add an imageUpload option use Redactor widget-->
+    <?= $form->field($model, 'message')->widget(\yii\redactor\widgets\Redactor::className(),
+        [
+            'clientOptions' => [
+                //'imageManagerJson' => ['/redactor/upload/image-json'],
+                //'imageUpload' => ['/redactor/upload/image'],
+                //'fileUpload' => ['/redactor/upload/file'],
+                //'lang' => 'zh_cn',
+                //'plugins' => ['clips', 'fontcolor','imagemanager'],
+            ],
+
+        ]
+
+        ) ?>
+
+
 
     <?= $form->field($model, 'permissions')->dropDownList($model->getPermissions(),
         ['prompt'=>'- choose your permission -'])?>
@@ -28,3 +46,9 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+
+
+
+

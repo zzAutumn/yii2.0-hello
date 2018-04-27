@@ -68,6 +68,14 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'status' => 'status/index',
+                'status/index' => 'status/index',
+                'status/create' => 'status/create',
+                'status/view/<id:\d+>' => 'status/view',
+                'status/update/<id:\d+>' => 'status/update',
+                'status/delete/<id:\d+>' => 'status/delete',
+                'status/<slug>' => 'status/slug',
+                'defaultRoute' => '/site/index',
             ],
         ],
 
@@ -89,6 +97,13 @@ $config = [
                 'User' => 'app\models\User',
             ],*/
             'admins' => ['admin']
+        ],
+        'redactor' => [
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => '@webroot/uploads',
+            'uploadUrl' => "@web/uploads",
+            'imageAllowExtensions'=>['jpg','png','gif','jpeg'],
+
         ],
     ],
     'params' => $params,

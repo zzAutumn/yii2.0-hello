@@ -11,6 +11,9 @@ namespace app\models;
 //use yii\base\Model;
 use Yii;
 use dektrium\user\models\User;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\BlameableBehavior;
+use yii\db\ActiveRecord;
 /**
  * This is the model class for table "status".
  *
@@ -47,10 +50,34 @@ class Status extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['message', 'created_at', 'updated_at','created_by'], 'required'],
+            [['message'], 'required'],
             [['message'], 'string'],
             [['permissions', 'created_at', 'updated_at','created_by'], 'integer'],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'message',
+                'immutable' => true,
+                'ensureUnique'=>true,
+            ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
         ];
     }
 
@@ -90,5 +117,19 @@ class Status extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    public function afterSave($insert, $changeAttributes)
+    {
+        parent::afterSave($insert,$changeAttributes);
+        //when insert false,then record has been updated
+        if ($insert){
+            //add StatusLog entry
+            $status_log = new StatusLog();
+            $status_log->status_id = $this->id;
+            $status_log->updated_by = $this->updated_by;
+            $status_log->created_by = $this->created_by;
+            $status_log->save();
+        }
     }
 }

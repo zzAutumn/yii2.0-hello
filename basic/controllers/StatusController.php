@@ -23,6 +23,7 @@ class StatusController extends Controller
     public function behaviors()
     {
         return [
+
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -39,7 +40,7 @@ class StatusController extends Controller
                 'rules' => [
                     // allow authenticated users
                     [
-                        'actions' => ['index','create','view'],
+                        'actions' => ['index','create','view','slug'],
                         'allow' => true,
                         // Allow users, moderators and admins to create
                         'roles' => [
@@ -99,6 +100,24 @@ class StatusController extends Controller
     }
 
     /**
+     * Displays a single Status model.
+     * @param string $slug
+     * @return mixed
+     */
+    public function actionSlug($slug)
+    {
+        $model = Status::find()->where(['slug'=>$slug])->one();
+        if (!is_null($model)) {
+            return $this->render('view', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->redirect('/status/index');
+        }
+    }
+
+
+    /**
      * Creates a new Status model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -112,9 +131,9 @@ class StatusController extends Controller
         exit();*/
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->created_by = Yii::$app->user->getId();
-            $model->created_at = time();
-            $model->updated_at = time();
+            //$model->created_by = Yii::$app->user->getId();
+            //$model->created_at = time();
+            //$model->updated_at = time();
 
             if ($model->save()){
                 return $this->redirect(['view', 'id' => $model->id]);
