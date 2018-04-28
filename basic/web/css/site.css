@@ -14,9 +14,17 @@ body {
     padding: 70px 15px 20px;
 }
 
+/*
+set background-color navbar
+*/
+
+.navbar-my {
+    background-color: aliceblue;
+}
+
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
+    background-color: #09d3f580;
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }

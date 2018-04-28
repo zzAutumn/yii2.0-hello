@@ -4,10 +4,10 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Inventory */
-
-$this->title = 'Update Inventory: {nameAttribute}';
+$title = 'Update Inventory: '.$model->item_name;
+$this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => 'Inventories', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->item_name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="inventory-update">

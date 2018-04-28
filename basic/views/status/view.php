@@ -6,6 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Status */
 
+
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Statuses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,13 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'createdBy.email',
+            //'id',
+            //'createdBy.email',
             //'message:ntext',
             'message:html',
-            'permissions',
-            'created_at',
-            'updated_at',
+            //'permissions',
+            'created_at:date',
+            'updated_at:date',
         ],
     ]) ?>
 

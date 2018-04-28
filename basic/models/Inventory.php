@@ -40,6 +40,7 @@ class Inventory extends \yii\db\ActiveRecord
         return [
             [['item_name'], 'required'],
             [['quantity', 'per_price'], 'integer'],
+            [['url'],'url'],
             [['item_name', 'vendor', 'catolog', 'type', 'url', 'unit', 'location', 'per_size', 'note'], 'string', 'max' => 255],
         ];
     }
@@ -67,8 +68,41 @@ class Inventory extends \yii\db\ActiveRecord
 
     public function getTypes()
     {
-        return ['general supply','antibody','cell line','chemical',
-            'enzyme restriction','equipment','ologo or primer','plasmid'];
+        return ['general supply'=>'general supply','antibody'=>'antibody','cell line'=>'cell line',
+            'chemical'=>'chemical',
+            'enzyme restriction'=>'enzyme restriction','equipment'=>'equipment',
+            'ologo or primer'=>'ologo or primer','plasmid'=>'plasmid'];
+    }
+
+    public function getTypesLable($num)
+    {
+        switch ($num){
+            case 0:
+                $item = 'general supply';
+                break;
+            case 1:
+                $item = 'antibody';
+                break;
+            case 2:
+                $item = 'cell line';
+                break;
+            case 3:
+                $item = 'chemical';
+                break;
+            case 4:
+                $item = 'enzyme restriction';
+                break;
+            case 5:
+                $item = 'equipment';
+                break;
+            case 6:
+                $item = 'ologo or primer';
+                break;
+            case 7:
+                $item = 'plasmid';
+                break;
+        }
+        return $item;
     }
 
 }
