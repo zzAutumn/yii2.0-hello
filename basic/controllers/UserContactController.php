@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\MMeeting;
-use app\models\MMeetingSearch;
+use app\models\UserContact;
+use app\models\UserContactSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\User;
-use app\components\AccessRule;
-use yii\filters\AccessControl;
+
 /**
- * MMeetingController implements the CRUD actions for MMeeting model.
+ * UserContactController implements the CRUD actions for UserContact model.
  */
-class MMeetingController extends Controller
+class UserContactController extends Controller
 {
     /**
      * @inheritdoc
@@ -28,54 +26,16 @@ class MMeetingController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                // We will override the default rule config with the new AccessRule class
-                'ruleConfig' => [
-                    'class' => AccessRule::className(),
-                ],
-                /*'only' => ['index','create','update','view'],*/
-                'rules' => [
-                    // allow authenticated users
-                    [
-                        'actions' => ['index','create','view','slug'],
-                        'allow' => true,
-                        // Allow users, moderators and admins to create
-                        'roles' => [
-                            User::ROLE_USER,
-                            User::ROLE_MODERATOR,
-                            User::ROLE_ADMIN
-                        ],
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        // Allow moderators and admins to update
-                        'roles' => [
-                            User::ROLE_MODERATOR,
-                            User::ROLE_ADMIN
-                        ],
-                    ],
-                    [
-                        'actions' => ['delete'],
-                        'allow' => true,
-                        // Allow admins to delete
-                        'roles' => [
-                            User::ROLE_ADMIN
-                        ],
-                    ],
-                ],
-            ],
         ];
     }
 
     /**
-     * Lists all MMeeting models.
+     * Lists all UserContact models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new MMeetingSearch();
+        $searchModel = new UserContactSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -85,7 +45,7 @@ class MMeetingController extends Controller
     }
 
     /**
-     * Displays a single MMeeting model.
+     * Displays a single UserContact model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -98,13 +58,13 @@ class MMeetingController extends Controller
     }
 
     /**
-     * Creates a new MMeeting model.
+     * Creates a new UserContact model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new MMeeting();
+        $model = new UserContact();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -116,7 +76,7 @@ class MMeetingController extends Controller
     }
 
     /**
-     * Updates an existing MMeeting model.
+     * Updates an existing UserContact model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -136,7 +96,7 @@ class MMeetingController extends Controller
     }
 
     /**
-     * Deletes an existing MMeeting model.
+     * Deletes an existing UserContact model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -150,15 +110,15 @@ class MMeetingController extends Controller
     }
 
     /**
-     * Finds the MMeeting model based on its primary key value.
+     * Finds the UserContact model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return MMeeting the loaded model
+     * @return UserContact the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MMeeting::findOne($id)) !== null) {
+        if (($model = UserContact::findOne($id)) !== null) {
             return $model;
         }
 

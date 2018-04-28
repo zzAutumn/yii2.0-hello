@@ -58,7 +58,7 @@ AppAsset::register($this);
     ]);
     */
     $navItems=[
-        ['label' => 'Home', 'url' => ['/site/index']],
+        //['label' => 'Home', 'url' => ['/site/index']],
         [
             'label' => 'Status',
             'url'=>['/status/index'],
@@ -73,15 +73,27 @@ AppAsset::register($this);
                     ['label' => 'inventory','url' => ['/inventory/index']],
             ],
             ],
-        ['label' => 'Contact', 'url' => ['/site/contact']]
+        //['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Meeting', 'url' => ['/m-meeting/index']]
     ];
     if (Yii::$app->user->isGuest) {
         array_push($navItems,['label' => 'Sign In', 'url' => ['/user/login']],['label' => 'Sign Up', 'url' => ['/user/register']]);
-    } else {
+    } /*else {
         array_push($navItems,['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
                 'url' => ['/site/logout'],
                 'linkOptions' => ['data-method' => 'post']]
         );
+    }*/
+    else{
+        array_push($navItems,['label'=>'Account',
+            'items'=>[
+                    ['label'=>'Setting','url'=>['/user-setting'],],
+                ['label'=>'Contact information','url'=>['/user-contact'],],
+                ['label'=>'Logout (' . Yii::$app->user->identity->username . ')','url'=>['/site/logout'],'linkOptions' => ['data-method' => 'post']],
+
+            ],
+
+            ]);
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
