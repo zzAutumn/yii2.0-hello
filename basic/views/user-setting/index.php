@@ -4,21 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\UserContactSearch */
+/* @var $searchModel app\models\UserSettingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Contact Information';
+$this->title = 'User Settings';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-contact-index">
+<div class="user-setting-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <p>You can add phone numbers and other information to share with your meeting contacts.
-        Only add contacts that you wish to share with meeting participants
-        </p>
+
     <p>
-        <?= Html::a('Add Contact Details', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create User Setting', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -27,12 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
-            //'user_id',
-            'contact_type',
-            'info',
-            //'details:ntext',
-            //'status',
+            'id',
+            'user_id',
+            'filename',
+            'avatar',
+            'reminder_eve',
+            //'reminder_hours',
+            //'contact_share',
+            //'no_email:email',
             //'created_at',
             //'updated_at',
 

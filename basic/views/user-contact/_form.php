@@ -12,19 +12,21 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+   <!-- --><?/*= $form->field($model, 'user_id')->textInput() */?>
 
-    <?= $form->field($model, 'contact_type')->textInput() ?>
+    <?= $form->field($model, 'contact_type')->dropDownList($model->getUserContactTypeOptions(),
+        ['prompt'=>'What type of contact is this?'])->label('Type of Contact') ?>
 
-    <?= $form->field($model, 'info')->textInput(['maxlength' => true]) ?>
-
+    <?= $form->field($model, 'info')->textInput(['maxlength' => true])
+    ->label('Contact Information')?>
+    <p>e.g. phone number,qq,weixin......</p>
     <?= $form->field($model, 'details')->textarea(['rows' => 6]) ?>
+    <p>Specify any additional details the person may need to reach you with this information</p>
+    <?/*= $form->field($model, 'status')->textInput() */?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?/*= $form->field($model, 'created_at')->textInput() */?>
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?/*= $form->field($model, 'updated_at')->textInput() */?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

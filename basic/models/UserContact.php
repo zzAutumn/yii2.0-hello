@@ -20,6 +20,12 @@ use Yii;
  */
 class UserContact extends \yii\db\ActiveRecord
 {
+
+       const TYPE_OTHER = 0;
+       const TYPE_PHONE = 10;
+       const TYPE_QQ = 20;
+       const TYPE_WEIXIN = 30;
+
     /**
      * @inheritdoc
      */
@@ -66,4 +72,23 @@ class UserContact extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+
+    public function getUserContactTypeOptions()
+    {
+        return array(
+            self::TYPE_OTHER => 'Other',
+            self::TYPE_PHONE => 'Phone',
+            self::TYPE_QQ => 'QQ',
+            self::TYPE_WEIXIN => 'Weixin',
+        );
+    }
+
+    public function getUserContactType($data)
+    {
+        $options = $this->getUserContactTypeOptions();
+        return $options[$data];
+    }
+
+
 }
