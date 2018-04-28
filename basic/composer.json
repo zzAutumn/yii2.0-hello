@@ -21,7 +21,13 @@
         "yiisoft/yii2-jui": "^2.0",
         "dektrium/yii2-user":"^0.9.14",
         "yiidoc/yii2-redactor": "*",
-        "philippfrenzel/yii2fullcalendar": "*"
+        "philippfrenzel/yii2fullcalendar": "*",
+        "cebe/yii2-gravatar": "*",
+        "kartik-v/yii2-widget-fileinput": "*",
+        "yiisoft/yii2-imagine": "*",
+        "2amigos/yii2-switch-widget": "0.1.*",
+        "2amigos/yii2-resource-manager-component": "0.1.*"
+
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

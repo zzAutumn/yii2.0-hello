@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\UserSetting */
 
-$this->title = 'Update User Setting: {nameAttribute}';
+$this->title = 'Update Your Setting: ';
 $this->params['breadcrumbs'][] = ['label' => 'User Settings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
