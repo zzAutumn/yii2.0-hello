@@ -17,8 +17,8 @@ use yii\db\ActiveRecord;
  * @property int $updated_at
  *
  * @property User $owner
- * @property MMeetingTime[] $mMeetingTimes
- * @property MParticipant[] $mParticipants
+ * @property MeetingTime[] $mMeetingTimes
+ * @property Participant[] $mParticipants
  */
 class MMeeting extends \yii\db\ActiveRecord
 {
@@ -109,14 +109,14 @@ class MMeeting extends \yii\db\ActiveRecord
      */
     public function getMeetingNotes()
     {
-        return $this->hasMany(MMeetingNote::className(), ['meeting_id' => 'id']);
+        return $this->hasMany(MeetingNote::className(), ['meeting_id' => 'id']);
     }
     /**
      * @return \yii\db\ActiveQuery
      */
     public function getMeetingPlaces()
     {
-        return $this->hasMany(MMeetingPlace::className(), ['meeting_id' => 'id']);
+        return $this->hasMany(MeetingPlace::className(), ['meeting_id' => 'id']);
     }
 
     /**
@@ -124,7 +124,7 @@ class MMeeting extends \yii\db\ActiveRecord
      */
     public function getMMeetingTimes()
     {
-        return $this->hasMany(MMeetingTime::className(), ['meeting_id' => 'id']);
+        return $this->hasMany(MeetingTime::className(), ['meeting_id' => 'id']);
     }
 
     /**
@@ -132,7 +132,7 @@ class MMeeting extends \yii\db\ActiveRecord
      */
     public function getMParticipants()
     {
-        return $this->hasMany(MParticipant::className(), ['meeting_id' => 'id']);
+        return $this->hasMany(Participant::className(), ['meeting_id' => 'id']);
     }
 
     public function getMeetingType($data) {

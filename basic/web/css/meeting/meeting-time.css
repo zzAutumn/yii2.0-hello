@@ -1,0 +1,12 @@
+.input-group-lg,.input-group  {
+    width: 500px;
+}
+
+.well,.well-md {
+    color: black;
+    font-size: x-large;
+}
+
+.table-condensed {
+    width: 500px;
+}

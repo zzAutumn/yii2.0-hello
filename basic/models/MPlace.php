@@ -20,6 +20,11 @@ use Yii;
  */
 class MPlace extends \yii\db\ActiveRecord
 {
+    const TYPE_1 = 1;
+    const TYPE_2 = 2;
+    const TYPE_3 = 3;
+
+
     /**
      * @inheritdoc
      */
@@ -64,5 +69,24 @@ class MPlace extends \yii\db\ActiveRecord
     public function getCreatedBy()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    public function getMeetingPlaceTypeOption()
+    {
+        return array([
+            self::TYPE_1 => '新会议室二楼',
+            self::TYPE_2 => '老会议室二楼',
+            self::TYPE_3 => '其他',
+        ]);
+    }
+
+    public function getMeetingPlace($num)
+    {
+        $options = $this->getMeetingPlaceTypeOption();
+        if (!isset($options[$num])) {
+            $data = self::TYPE_3;
+        }
+        return $options[$data];
+
     }
 }

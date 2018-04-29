@@ -4,11 +4,11 @@ namespace app\controllers;
 
 use Yii;
 use app\models\MMeeting;
-use app\models\MMeetingTime;
+use app\models\MeetingTime;
 use app\models\MMeetingSearch;
-use app\models\MParticipant;
-use app\models\MMeetingNote;
-use app\models\MMeetingPlace;
+use app\models\Participant;
+use app\models\MeetingNote;
+use app\models\MeetingPlace;
 use app\models\MFriend;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -113,19 +113,19 @@ class MMeetingController extends Controller
     public function actionView($id)
     {
         $timeProvider = new ActiveDataProvider([
-            'query' => MMeetingTime::find()->where(['meeting_id'=>$id]),
+            'query' => MeetingTime::find()->where(['meeting_id'=>$id]),
         ]);
 
         $noteProvider = new ActiveDataProvider([
-            'query' => MMeetingNote::find()->where(['meeting_id'=>$id]),
+            'query' => MeetingNote::find()->where(['meeting_id'=>$id]),
         ]);
 
         $placeProvider = new ActiveDataProvider([
-            'query' => MMeetingPlace::find()->where(['meeting_id'=>$id]),
+            'query' => MeetingPlace::find()->where(['meeting_id'=>$id]),
         ]);
 
         $participantProvider = new ActiveDataProvider([
-            'query' => MParticipant::find()->where(['meeting_id'=>$id]),
+            'query' => Participant::find()->where(['meeting_id'=>$id]),
         ]);
         //$model = $this->findModel($id);
         //$model->prepareView();
@@ -144,36 +144,28 @@ class MMeetingController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($meeting_id)
+    public function actionCreate()
     {
-        $mtg = new MMeeting();
-        $title = $mtg->getMeetingTitle($meeting_id);
-        $model = new MParticipant();
-        $model->meeting_id= $meeting_id;
-        $model->invited_by= Yii::$app->user->getId();
-        // load friends for auto complete field
-        $friends = MFriend::getFriendList(Yii::$app->user->getId());
-
+        $model = new MMeeting();
         if ($model->load(Yii::$app->request->post())) {
-            if (!User::find()->where(['email' => $model->email])->exists()) {
-                // if email not already registered
-                //  create new user with temporary username & password
-                $temp_email_arr[] = $model->email;
-                $model->username = Inflector::slug(implode('-', $temp_email_arr));
-                $model->password = Yii::$app->security->generateRandomString(12);
-                $model->participant_id = $model->addUser();
-            } else {
-                // add participant from user record
-                $usr = User::find()->where(['email' => $model->email])->one();
-                $model->participant_id = $usr->id;
-            }
+            $model->owner_id= Yii::$app->user->getId();
             // validate the form against model rules
             if ($model->validate()) {
                 // all inputs are valid
                 $model->save();
-                return $this->redirect(['/meeting/view', 'id' => $meeting_id]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                // validation failed
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
+
     }
 
     /**
