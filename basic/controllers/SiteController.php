@@ -124,6 +124,16 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+        $mail = Yii::$app->mailer->compose();
+        $mail->setFrom('yjjjng0901@163.com');
+        $mail->setTo('790375332@qq.com');
+        $mail->setSubject('test');
+        $mail->setHtmlBody("<h1>hello</h1>");
+        if ($mail->send())
+            echo "success";
+        else
+            echo "fail";
+
         return $this->render('about');
     }
 

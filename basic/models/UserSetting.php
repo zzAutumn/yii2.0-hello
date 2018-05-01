@@ -97,8 +97,8 @@ class UserSetting extends \yii\db\ActiveRecord
 
     public static function initialize($user_id)
     {
-        //$us = UserSetting::find()->where(['user_id'=>$user_id])->one();
-        $us = UserSetting::findOne($user_id);
+        $us = UserSetting::find()->where(['user_id'=>$user_id])->one();
+        //$us = UserSetting::findOne($user_id);
         if (is_null($us)){
             $us = new UserSetting();
 
@@ -111,7 +111,7 @@ class UserSetting extends \yii\db\ActiveRecord
             $us->reminder_hours = 48;
             $us->save();
         }
-        return $us->user_id;
+        return $us->id;
     }
 
     public function getEarlyReminderType($data)
@@ -138,6 +138,8 @@ class UserSetting extends \yii\db\ActiveRecord
         foreach ($file as $f) {
             // check if file exists on server
             if (!empty($f) && file_exists($f)) {
+                // 给权限
+                //chmod($f,0777);
                 // delete file
                 unlink($f);
             }

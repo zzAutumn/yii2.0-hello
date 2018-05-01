@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ParticipantSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mparticipants';
+$this->title = 'Meeting Participants';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mparticipant-index">

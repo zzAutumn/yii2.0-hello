@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\MMeetingSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Mmeetings';
+$this->title = 'Meetings';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mmeeting-index">
@@ -20,7 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <ul class="nav nav-tabs" role="tablist">
         <li class="active"><a href="#upcoming" role="tab" data-toggle="tab">Upcoming</a></li>
         <li><a href="#past" role="tab" data-toggle="tab">Past</a></li>
-        <li><a href="#canceled" role="tab" data-toggle="tab">Canceled</a></li>
     </ul>
 
     <!-- Tab panes -->

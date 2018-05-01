@@ -87,6 +87,7 @@ AppAsset::register($this);
     else{
         array_push($navItems,['label'=>'Account',
             'items'=>[
+                ['label'=>'Friends','url'=>['/m-friend'],],
                     ['label'=>'Setting','url'=>['/user-setting'],],
                 ['label'=>'Contact information','url'=>['/user-contact'],],
                 ['label'=>'Logout (' . Yii::$app->user->identity->username . ')','url'=>['/site/logout'],'linkOptions' => ['data-method' => 'post']],

@@ -68,33 +68,45 @@ class ParticipantController extends Controller
      */
     public function actionCreate($meeting_id)
     {
+
         $mtg = new MMeeting();
         $title = $mtg->getMeetingTitle($meeting_id);
         $model = new Participant();
         $model->meeting_id= $meeting_id;
         $model->invited_by= Yii::$app->user->getId();
-        // load friends for auto complete field
-        $friends = MFriend::getFriendList(Yii::$app->user->getId());
+        // to do move into model
+        // load user's friends into email list array for autocomplete
+        $friend_list = MFriend::find()->where(['user_id'=>Yii::$app->getUser()->id])->all();
+        $email_list = [];
+        foreach ($friend_list as $x){
+            $email_list[] = $x->oldAttributes["email"];
+        }
 
-        if ($model->load(Yii::$app->request->post())) {
-            if (!User::find()->where(['email' => $model->email])->exists()) {
-                // if email not already registered
-                //  create new user with temporary username & password
-                $temp_email_arr[] = $model->email;
-                $model->username = Inflector::slug(implode('-', $temp_email_arr));
-                $model->password = Yii::$app->security->generateRandomString(12);
-                $model->participant_id = $model->addUser();
-            } else {
-                // add participant from user record
-                $usr = User::find()->where(['email' => $model->email])->one();
-                $model->participant_id = $usr->id;
-            }
+        if ((Yii::$app->request->post())) {
+            // to do fix saving and validation
+            // add new user when needed
             // validate the form against model rules
+            $email = Yii::$app->request->post();
             if ($model->validate()) {
                 // all inputs are valid
+                $model->participant_id = $model->add($email);
                 $model->save();
-                return $this->redirect(['/meeting/view', 'id' => $meeting_id]);
+                return $this->redirect(['m-meeting/view', 'id' => $meeting_id]);
+            } else {
+                // validation failed
+
+                return $this->render('create', [
+                    'model' => $model,
+                    'title' => $title,
+
+                ]);
             }
+        } else {
+            return $this->render('create', [
+            'model' => $model,
+            'title' => $title,
+
+            ]);
         }
     }
 

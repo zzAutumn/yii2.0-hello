@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use app\models\MFriend;
 /* @var $this yii\web\View */
 /* @var $model app\models\Participant */
 /* @var $form yii\widgets\ActiveForm */
@@ -15,25 +15,27 @@ use yii\widgets\ActiveForm;
     <p>Email address:</p>
     <?php
     // preload friends into array
+
+    $friend_list = MFriend::find()->where(['user_id'=>Yii::$app->getUser()->id])->all();
+    $email_list = [];
+    foreach ($friend_list as $x){
+        $email_list[] = $x->oldAttributes["email"];
+    }
+
     echo yii\jui\AutoComplete::widget([
         'model' => $model,
-        'attribute' => 'email',
+        'name' => 'email',
         'clientOptions' => [
-            'source' => $friends,
-        ],
+            'source' => $email_list,]
     ]);
     ?>
-    <?= $form->field($model, 'meeting_id')->textInput() ?>
+   <!-- <?/*= $form->field($model, 'invited_by')->textInput() */?>
 
-    <?= $form->field($model, 'participant_id')->textInput() ?>
+    <?/*= $form->field($model, 'status')->textInput() */?>
 
-    <?= $form->field($model, 'invited_by')->textInput() ?>
+    <?/*= $form->field($model, 'created_at')->textInput() */?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    --><?/*= $form->field($model, 'updated_at')->textInput() */?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

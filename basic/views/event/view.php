@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\UserContact */
+/* @var $model app\models\Event */
 
-$this->title = 'Contact information';
-$this->params['breadcrumbs'][] = ['label' => 'User Contacts', 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Events', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-contact-view">
+<div class="event-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -25,26 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?php
-    $type = $model->getUserContactTypeOptions()[$model->contact_type];
-    ?>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             //'id',
-            //'contact_type',
-            [
-                'label'=>'contact_type',
-                'value'=> $type,
-            ],
-            'info',
-            'details:ntext',
-            //'status',
+            'title',
+            'reporter',
+            'time',
+            'description',
             'created_at:datetime',
             'updated_at:datetime',
         ],
     ]) ?>
 
 </div>
-

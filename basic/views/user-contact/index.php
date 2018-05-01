@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserContactSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -21,7 +21,13 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Add Contact Details', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?= $this->render('_grid', [
+        'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+    ]) ?>
+
+   <!-- --><?/*= GridView::widget([
+            //'model' => $model,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -29,14 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             //'user_id',
-            'contact_type',
+            //'contact_type',
             'info',
             //'details:ntext',
             //'status',
             //'created_at',
             //'updated_at',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]); */?>
 </div>

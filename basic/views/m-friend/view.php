@@ -2,15 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\User;
 /* @var $this yii\web\View */
-/* @var $model app\models\UserContact */
+/* @var $model app\models\MFriend */
 
-$this->title = 'Contact information';
-$this->params['breadcrumbs'][] = ['label' => 'User Contacts', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Mfriends', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="user-contact-view">
+<div class="mfriend-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -25,22 +25,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?php
-    $type = $model->getUserContactTypeOptions()[$model->contact_type];
-    ?>
-
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
             //'id',
-            //'contact_type',
-            [
-                'label'=>'contact_type',
-                'value'=> $type,
-            ],
-            'info',
-            'details:ntext',
+            //'user_id',
+            //'friend_id',
             //'status',
+            //'number_meetings',
+            //'is_favorite',
+            [
+                    'label' => 'Friend Email',
+                    'value' => User::findOne($model->friend_id)->username,
+            ],
             'created_at:datetime',
             'updated_at:datetime',
         ],

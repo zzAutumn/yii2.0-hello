@@ -1,14 +1,14 @@
-s<?php
+<?php
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\StatusSearch */
+/* @var $model app\models\MFriendSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="status-search">
+<div class="mfriend-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -17,13 +17,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'message') ?>
+    <?= $form->field($model, 'user_id') ?>
 
-    <?= $form->field($model, 'permissions') ?>
+    <?= $form->field($model, 'friend_id') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+    <?= $form->field($model, 'status') ?>
 
-    <?= $form->field($model, 'updated_at') ?>
+    <?= $form->field($model, 'number_meetings') ?>
+
+    <?php // echo $form->field($model, 'is_favorite') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
+
+    <?php // echo $form->field($model, 'updated_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

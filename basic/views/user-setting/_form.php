@@ -34,6 +34,7 @@ use kartik\file\FileInput;
 
         <?= $form->field($model, 'no_email')->checkbox(['label'=>'Turn off all email','uncheck' =>  $model::SETTING_NO, 'checked' => $model::SETTING_YES]) ?>
             </div>
+
             <div class="tab-pane vertical-pad" id="photo">
                 <?= $form->field($model, 'image')->widget(FileInput::classname(), [
                     'options' => ['accept' => 'image/*'],
@@ -52,7 +53,12 @@ use kartik\file\FileInput;
     <div class="col-md-4">
         <?php
         if ($model->avatar<>'') {
-            echo '<img src="'.Yii::getAlias('@web').'/uploads/avatar/sqr_'.$model->avatar.'" class="profile-image"/>';
+            //$img = Yii::getAlias('@web').'/uploads/avatar/sqr_'.$model->avatar;
+            $img = Yii::$app->basePath . '/web/uploads/avatar/sqr_'.$model->avatar;
+            if(chmod($img,0755)){
+                echo '<img src="'.Yii::getAlias('@web').'/uploads/avatar/sqr_'.$model->avatar.'" class="profile-image" style="margin-left: 30px;border: 2px black solid";/>';
+            }
+            //echo '<img src="'.Yii::getAlias('@web').'/uploads/avatar/sqr_'.$model->avatar.'" class="profile-image"/>';
         } else {
             echo \cebe\gravatar\Gravatar::widget([
                 'email' => app\models\User::find()->where(['id'=>Yii::$app->user->getId()])->one()->email,

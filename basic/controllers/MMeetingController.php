@@ -153,6 +153,7 @@ class MMeetingController extends Controller
             if ($model->validate()) {
                 // all inputs are valid
                 $model->save();
+                Yii::$app->session->setFlash("success","You have entered the data correctly");
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
                 // validation failed
@@ -216,5 +217,32 @@ class MMeetingController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionSendEmail($id)
+    {
+        $place = MeetingPlace::find()->where(['meeting_id'=>$id])->one()->place_name;
+        $content = MMeeting::find()->where(['id'=>$id])->one()->message;
+        $time = MeetingTime::find()->where(['meeting_id'=>$id])->one()->start;
+        $time = date('Y-m-d H:i:s',$time);
+
+        $mail = Yii::$app->mailer->compose();
+        $mail->setFrom('yjjjng0901@163.com');
+        $mail->setTo('790375332@qq.com');
+        $mail->setSubject('Notification ');
+        $mail->setHtmlBody(
+            "<h1>Content: $content</h1>
+                <h3>Place: $place</h3>
+                <h3>Time: $time</h3>"
+        );
+        if ($mail->send())
+            echo "success";
+        else
+            echo "fail";
+    }
+
+    public function actionIndex2()
+    {
+        echo "test";
     }
 }

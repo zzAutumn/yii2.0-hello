@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\UserContact;
-use app\models\UserContactSearch;
+use app\models\MFriend;
+use app\models\MFriendSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserContactController implements the CRUD actions for UserContact model.
+ * MFriendController implements the CRUD actions for MFriend model.
  */
-class UserContactController extends Controller
+class MFriendController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class UserContactController extends Controller
     }
 
     /**
-     * Lists all UserContact models.
+     * Lists all MFriend models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserContactSearch();
+        $searchModel = new MFriendSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class UserContactController extends Controller
     }
 
     /**
-     * Displays a single UserContact model.
+     * Displays a single MFriend model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,27 +58,43 @@ class UserContactController extends Controller
     }
 
     /**
-     * Creates a new UserContact model.
+     * Creates a new MFriend model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new UserContact();
-        $id = Yii::$app->getUser()->id;
-        $model->user_id = $id;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //$model->created_at =
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new MFriend();
+        $model->user_id = Yii::$app->getUser()->id;
+
+        if ($model->load(Yii::$app->request->post())) {
+            //get user_id of email
+            $user_id = $model->lookupEmail($model->email);
+            if ($user_id === false){
+                $user_id = $model->addUser($model->email);
+            }
+            $model->friend_id = $user_id;
+            if ($model->validate()){
+                // all inputs are valid
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                // validation failed
+                return $this->render('create',[
+                    'model'=>$model,
+                ]);
+            }
+
+        }else{
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
-     * Updates an existing UserContact model.
+     * Updates an existing MFriend model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +114,7 @@ class UserContactController extends Controller
     }
 
     /**
-     * Deletes an existing UserContact model.
+     * Deletes an existing MFriend model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -112,25 +128,15 @@ class UserContactController extends Controller
     }
 
     /**
-     * Finds the UserContact model based on its primary key value.
+     * Finds the MFriend model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return UserContact the loaded model
+     * @return MFriend the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = UserContact::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    protected function findUserModel($user_id)
-    {
-        $model = UserContact::find()->where(['user_id'=>$user_id])->one();
-        if ($model !== null) {
+        if (($model = MFriend::findOne($id)) !== null) {
             return $model;
         }
 

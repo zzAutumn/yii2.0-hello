@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "user_contact".
@@ -34,14 +35,22 @@ class UserContact extends \yii\db\ActiveRecord
         return 'user_contact';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['user_id', 'info', 'details', 'created_at', 'updated_at'], 'required'],
-            [['user_id', 'contact_type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['user_id', 'info'], 'required'],
+            [['contact_type', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['username'],'safe'],
             [['details'], 'string'],
             [['info'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],

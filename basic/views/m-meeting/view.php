@@ -12,6 +12,11 @@ $this->params['breadcrumbs'][] = ['label' => 'Meetings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $timeCount = $timeProvider->count;
 ?>
+
+<?php /*if (Yii::$app->session->hasFlash("success")){
+    echo "<div class='alert alert-success'>".Yii::$app->session->getFlash("success")."</div>";
+} */?>
+
 <div class="mmeeting-view">
 
     <div class="panel panel-default">
@@ -35,12 +40,6 @@ $timeCount = $timeProvider->count;
                 <div class="col-lg-6"></div>
                 <div class="col-lg-6" >
                     <div style="float:right;">
-                        <!-- <?/*= Html::a('Send', ['finalize', 'id' => $model->id], ['class' => 'btn btn-primary '.(!$model->isReadyToSend?'disabled':'')]) */?>
-                    --><?/*= Html::a('Finalize', ['finalize', 'id' => $model->id], ['class' => 'btn btn-success '.(!$model->isReadyToFinalize?'disabled':'')]) */?>
-                        <?/*= Html::a('Invite Participants', ['/mparticipant/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary']) */?>
-                       <!-- --><?/*= Html::a('Add Place', ['/m-meeting-place/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary']) */?>
-                        <?/*= Html::a('Add Time', ['/meeting-time/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary']) */?>
-                        <?/*= Html::a('Add Note', ['/m-meeting-note/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary']) */?>
 
                         <?= Html::a('', ['delete', 'id' => $model->id], [
                             'class' => 'btn btn-danger glyphicon glyphicon-remove btn-danger',
@@ -50,6 +49,7 @@ $timeCount = $timeProvider->count;
                             ],
                         ]) ?>
                         <?= Html::a('', ['update', 'id' => $model->id], ['class' => 'btn btn-primary glyphicon glyphicon-pencil','title'=>'Edit']) ?>
+                        <?= Html::a('', ['send-email', 'id' => $model->id], ['class' => 'btn btn-success glyphicon glyphicon-send']) ?>
                     </div>
                 </div>
             </div> <!-- end row -->
@@ -57,7 +57,7 @@ $timeCount = $timeProvider->count;
     </div>
 
     <div class="panel panel-info">
-        <div class="panel-heading"><h2 class="panel-title" style="font-size: 28px">Place</h2></div>
+        <div class="panel-heading"><h2 class="panel-title" style="font-size: 25px">Place</h2></div>
         <div class="panel-body" >
             <div style="float:right;">
                 <?= Html::a('', ['meeting-place/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary  glyphicon glyphicon-plus']) ?>
@@ -74,7 +74,7 @@ $timeCount = $timeProvider->count;
 
         </div>
 
-        <div class="panel-heading"><h2 class="panel-title" style="font-size: 28px">Dates &amp; Times</h2></div>
+        <div class="panel-heading"><h2 class="panel-title" style="font-size: 25px">Dates &amp; Times</h2></div>
         <div class="panel-body" >
             <div style="float:right;">
                 <?= Html::a('', ['meeting-time/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary  glyphicon glyphicon-plus']) ?>
@@ -90,7 +90,37 @@ $timeCount = $timeProvider->count;
             ]) ?>
         </div>
 
-        <div class="panel-heading"><h2 class="panel-title" style="font-size: 28px">Notes</h2></div>
+        <div class="panel-heading"><h2 class="panel-title" style="font-size: 25px">Participants</h2>
+        </div>
+        <div class="panel-body" >
+            <div style="float:right;">
+                <?= Html::a('', ['participant/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary  glyphicon glyphicon-plus']) ?>
+                <?= Html::a('', ['participant/update', 'meeting_id' => $model->id], ['class' => 'btn btn-primary  glyphicon glyphicon-pencil']) ?>
+            </div>
+            <table class="table">
+                <thead>
+                <tr class="small-header">
+                    <td></td>
+                    <td >You</td>
+                    <td >Them</td>
+                    <td >
+                        <?php
+                        if ($participantProvider->count>1) echo 'Choose';
+                        ?>
+                </tr>
+                </thead>
+            <?= ListView::widget([
+                'dataProvider' => $participantProvider,
+                'itemOptions' => ['class' => 'item'],
+                'layout' => '{items}',
+                'itemView' => '../participant/_list',
+            ]) ?>
+
+            </table>
+
+        </div>
+
+        <div class="panel-heading"><h2 class="panel-title" style="font-size: 25px">Notes</h2></div>
         <div class="panel-body" >
             <div style="float:right;">
                 <?= Html::a('', ['meeting-note/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary  glyphicon glyphicon-plus']) ?>

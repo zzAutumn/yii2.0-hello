@@ -26,7 +26,7 @@ $this->registerCssFile("@web/css/meeting/meeting-time.css");
                 'template' => '<div class="well well-md" style="background-color: #09f287; width:550px">{input}</div>',
                 'clientOptions' => [
                     'autoclose' => true,
-                    'format' => 'dd-M-yyyy',
+                    'format' => 'yyyy-mm-dd',//'dd-M-yyyy  H:i:s', //yyyy-m-d
                     'todayBtn' => true,
                     'minuteStep'=> 15,
                     'pickerPosition' => 'center',

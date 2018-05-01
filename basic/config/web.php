@@ -48,10 +48,13 @@ $config = [
                 'port' => '587',
                 'encryption' => 'ssl',
             ],
-            /*'messageConfig'=>[
-                'charset'=>'UTF-8',
-                'from'=>['yjjjng0901@163.com'=>'admin']
-            ],*/
+        ],
+        'mailgun'=>[
+            'class' => 'vendor.baibaratsky.php-mailgun.MailgunYii',
+            'domain' => 'example.com',
+            'key' => 'key-65e5db09337892dce21ecba03d425f28',
+            'tags' => array('yii'),
+            'enableTracking' => false,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

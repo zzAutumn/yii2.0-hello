@@ -78,7 +78,7 @@ class MFriend extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFriend()
+    public function getFriendList()
     {
         return $this->hasOne(User::className(), ['id' => 'friend_id']);
     }
@@ -107,7 +107,7 @@ class MFriend extends \yii\db\ActiveRecord
         $user = new User();
         $user->email = $email;
         $user->username = $email;
-        $user->status = User::STATUS_PASSIVE;
+        //$user->status = User::STATUS_PASSIVE;
         $user->setPassword( Yii::$app->security->generateRandomString());
         $user->generateAuthKey();
         $user->save();

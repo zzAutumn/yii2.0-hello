@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\UserContact;
-use app\models\UserContactSearch;
+use app\models\Event;
+use app\models\EventSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserContactController implements the CRUD actions for UserContact model.
+ * EventController implements the CRUD actions for Event model.
  */
-class UserContactController extends Controller
+class EventController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,22 +30,32 @@ class UserContactController extends Controller
     }
 
     /**
-     * Lists all UserContact models.
+     * Lists all Event models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new UserContactSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        /*$searchModel = new EventSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);*/
+        $events = Event::find()->all();
+        foreach ($events as $eve){
+            $event = new \yii2fullcalendar\models\Event();
+            $event->id = $eve->id;
 
+            $event->title = $eve->title;
+            //$time = date('Y-m-d H:i:s',$eve->created_at);
+            //$event->start = date('Y-m-d\Th:m:s\Z',$eve->created_at);
+            $event->start = $eve->time;
+            $tasks[] = $event;
+
+        };
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'events' => $tasks,
         ]);
     }
 
     /**
-     * Displays a single UserContact model.
+     * Displays a single Event model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,27 +68,25 @@ class UserContactController extends Controller
     }
 
     /**
-     * Creates a new UserContact model.
+     * Creates a new Event model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($date)
     {
-        $model = new UserContact();
-        $id = Yii::$app->getUser()->id;
-        $model->user_id = $id;
+        $model = new Event();
+        $model->time = $date;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //$model->created_at =
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing UserContact model.
+     * Updates an existing Event model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +106,7 @@ class UserContactController extends Controller
     }
 
     /**
-     * Deletes an existing UserContact model.
+     * Deletes an existing Event model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -112,25 +120,15 @@ class UserContactController extends Controller
     }
 
     /**
-     * Finds the UserContact model based on its primary key value.
+     * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return UserContact the loaded model
+     * @return Event the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = UserContact::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    protected function findUserModel($user_id)
-    {
-        $model = UserContact::find()->where(['user_id'=>$user_id])->one();
-        if ($model !== null) {
+        if (($model = Event::findOne($id)) !== null) {
             return $model;
         }
 
