@@ -35,7 +35,7 @@ class MeetingNote extends \yii\db\ActiveRecord
     {
         return [
             [[ 'note'], 'required'],
-            [['meeting_id'],'unique'],
+            //[['meeting_id'],'unique'],
             [['meeting_id', 'posted_by', 'status', 'created_at', 'updated_at'], 'integer'],
             [['note'], 'string'],
             [['meeting_id'], 'exist', 'skipOnError' => true, 'targetClass' => MMeeting::className(), 'targetAttribute' => ['meeting_id' => 'id']],

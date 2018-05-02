@@ -5,9 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\MeetingPlace */
 
-$this->title = 'Update Mmeeting Place: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Mmeeting Places', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'Update Mmeeting Place: ';
+$this->params['breadcrumbs'][] = ['label' => 'Mmeeting', 'url' => ['m-meeting/view','id' => $model->meeting_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="mmeeting-place-update">

@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
 use app\assets\AppAsset;
+use janisto\timepicker\TimePicker;
+use kartik\datetime\DateTimePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\MeetingTime */
 /* @var $form yii\widgets\ActiveForm */
@@ -17,22 +19,16 @@ $this->registerCssFile("@web/css/meeting/meeting-time.css");
     <div class="row">
         <div class="col-md-4">
             <?php $form = ActiveForm::begin(); ?>
-
-            <?= DatePicker::widget([
-                'model' => $model,
-                'attribute' => 'start',
-                'language' => 'en',
+            <?=
+            $form->field($model, 'status')->widget(DateTimePicker::classname(), [
+                'options' => ['placeholder' => 'Enter event time ...'],
                 'size' => 'lg',
-                'template' => '<div class="well well-md" style="background-color: #09f287; width:550px">{input}</div>',
-                'clientOptions' => [
-                    'autoclose' => true,
-                    'format' => 'yyyy-mm-dd',//'dd-M-yyyy  H:i:s', //yyyy-m-d
-                    'todayBtn' => true,
-                    'minuteStep'=> 15,
-                    'pickerPosition' => 'center',
-                    'todayHighlight'=>true,
+                'pluginOptions' => [
+                    'autoclose' => true
                 ]
-            ]);?>
+            ]);
+            ?>
+
         </div>
     </div>
     <div class="clearfix"><p></div>

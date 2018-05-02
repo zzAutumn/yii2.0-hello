@@ -23,16 +23,7 @@ use yii\db\ActiveRecord;
 class MMeeting extends \yii\db\ActiveRecord
 {
     const TYPE_OTHER = 0;
-    const TYPE_COFFEE = 10;
-    const TYPE_BREAKFAST = 20;
-    const TYPE_LUNCH = 30;
-    const TYPE_PHONE = 40;
-    const TYPE_VIDEO = 50;
-    const TYPE_HAPPYHOUR = 60;
-    const TYPE_DINNER = 70;
-    const TYPE_DRINKS = 80;
-    const TYPE_BRUNCH = 90;
-    const TYPE_OFFICE = 100;
+    const TYPE_GROUP_MEETING = 10;
 
     const STATUS_PLANNING =0;
     const STATUS_CONFIRMED = 20;
@@ -146,16 +137,7 @@ class MMeeting extends \yii\db\ActiveRecord
     public function getMeetingTypeOptions()
     {
         return array(
-            self::TYPE_OFFICE => 'Office',
-            self::TYPE_COFFEE => 'Coffee',
-            self::TYPE_BREAKFAST => 'Breakfast',
-            self::TYPE_LUNCH => 'Lunch',
-            self::TYPE_PHONE => 'Phone call',
-            self::TYPE_VIDEO => 'Video conference',
-            self::TYPE_HAPPYHOUR => 'Happy hour',
-            self::TYPE_DINNER => 'Dinner',
-            self::TYPE_DRINKS => 'Drinks',
-            self::TYPE_BRUNCH => 'Brunch',
+            self::TYPE_GROUP_MEETING => 'Group meeting',
             self::TYPE_OTHER => 'Other',
         );
     }

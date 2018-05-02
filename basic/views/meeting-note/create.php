@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\MeetingNote */
 
 $this->title = 'Add a Meeting Note';
-$this->params['breadcrumbs'][] = ['label' => 'Mmeetings', 'url' => ['m-meeting/view','id' => $model->meeting_id]];
+$this->params['breadcrumbs'][] = ['label' => 'Mmeetings', 'url' => ['m-meeting/view','id' => $model -> meeting_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mmeeting-note-create">

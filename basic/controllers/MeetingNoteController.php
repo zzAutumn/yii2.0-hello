@@ -66,6 +66,11 @@ class MeetingNoteController extends Controller
      */
     public function actionCreate($meeting_id)
     {
+        if (MeetingNote::findOne(['meeting_id'=>$meeting_id]) !== NULL){
+            return $this->redirect(['/m-meeting/view',
+                'id'=>$meeting_id,]);
+        }
+
         $model = new MeetingNote();
         $mtg = new MMeeting();
         $title = $mtg->getMeetingTitle($meeting_id);
@@ -100,12 +105,17 @@ class MeetingNoteController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($meeting_id)
     {
-        $model = $this->findModel($id);
+        $model = MeetingNote::findOne(['meeting_id'=>$meeting_id]);
 
+        if ($model == NULL){     //如果为空的话返回之前的页面，先create
+            return $this->redirect(['/m-meeting/view',
+               'id'=>$meeting_id,
+            ]);
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/m-meeting/view', 'id' => $model->meeting_id]);
         }
 
         return $this->render('update', [

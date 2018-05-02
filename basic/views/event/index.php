@@ -16,12 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 id="test"><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Create Event', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?php
         Modal::begin([
@@ -39,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
          'header'        => [
              'left'   => 'today prev,next',
              'center' => 'title',
-             'right'  => 'timelineDay,timelineThreeDays,agendaWeek,month',
+             'right'  => 'timelineDay,timelineThreeDays,month',
          ],
          'clientOptions' => [
              'now'               =>  date('Y-m-d',time()),

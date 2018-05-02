@@ -36,8 +36,9 @@ class MeetingTime extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['meeting_id','start'], 'required'],
-            [['meeting_id', 'start', 'suggested_by', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['meeting_id'], 'required'],
+            [['status'],'string'],
+            [['meeting_id', 'suggested_by','created_at', 'updated_at'], 'integer'],
             [['start'], 'unique', 'targetAttribute' => ['start','meeting_id'], 'message'=>'This date and time has already been suggested.'],
             [['meeting_id'], 'exist', 'skipOnError' => true, 'targetClass' => MMeeting::className(), 'targetAttribute' => ['meeting_id' => 'id']],
             [['suggested_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['suggested_by' => 'id']],

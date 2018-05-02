@@ -14,7 +14,7 @@ use kartik\file\FileInput;
             'options'=>['enctype'=>'multipart/form-data']
     ]); ?>
 
-    <div class="col-md-8">
+    <div class="col-md-6">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li class="active"><a href="#general" role="tab" data-toggle="tab">Setting</a></li>
@@ -50,7 +50,7 @@ use kartik\file\FileInput;
         </div><!-- end tab content -->
     </div> <!--end left col -->
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <?php
         if ($model->avatar<>'') {
             //$img = Yii::getAlias('@web').'/uploads/avatar/sqr_'.$model->avatar;

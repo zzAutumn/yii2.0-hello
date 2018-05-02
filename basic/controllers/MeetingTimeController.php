@@ -63,6 +63,10 @@ class MeetingTimeController extends Controller
      */
     public function actionCreate($meeting_id)
     {
+        if (MeetingTime::findOne(['meeting_id'=>$meeting_id]) !== NULL){
+            return $this->redirect(['/m-meeting/view', 'id' => $meeting_id]);
+        }
+
         $mtg = new MMeeting();
         $title = $mtg->getMeetingTitle($meeting_id);
         $model = new MeetingTime();
@@ -100,17 +104,22 @@ class MeetingTimeController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($meeting_id)
     {
-        $model = $this->findModel($id);
-
+        $model = MeetingTime::findOne(['meeting_id'=>$meeting_id]);
+        //$model->meeting_id = $meeting_id;
+        //$model->suggested_by= Yii::$app->user->getId();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['m-meeting/view', 'id' => $model->meeting_id]);
+        }else{
+            var_dump($model->getErrors());
+            //exit();
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+
     }
 
     /**

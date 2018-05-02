@@ -45,7 +45,7 @@ class MMeetingController extends Controller
                 'rules' => [
                     // allow authenticated users
                     [
-                        'actions' => ['index','create','view','slug'],
+                        'actions' => ['index','create','view','slug','send-email'],
                         'allow' => true,
                         // Allow users, moderators and admins to create
                         'roles' => [
@@ -222,10 +222,11 @@ class MMeetingController extends Controller
     public function actionSendEmail($id)
     {
         $place = MeetingPlace::find()->where(['meeting_id'=>$id])->one()->place_name;
+
         $content = MMeeting::find()->where(['id'=>$id])->one()->message;
         $time = MeetingTime::find()->where(['meeting_id'=>$id])->one()->start;
         $time = date('Y-m-d H:i:s',$time);
-
+        //var_dump($time);exit();
         $mail = Yii::$app->mailer->compose();
         $mail->setFrom('yjjjng0901@163.com');
         $mail->setTo('790375332@qq.com');

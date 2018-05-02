@@ -96,14 +96,23 @@ class MeetingPlaceController extends Controller
      */
     public function actionUpdate($meeting_id)
     {
-        $id = (int)$meeting_id;
-        $model = MeetingPlace::find()->where(['meeting_id'=>$id])->one();
-        //$model = $this->findModel($meeting_id);
+        $model = MeetingPlace::findOne(['meeting_id'=>$meeting_id]);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model == NULL){     //如果为空的话返回之前的页面，先create
+            return $this->redirect(['/m-meeting/view',
+                'id'=>$meeting_id,
+            ]);
         }
-        var_dump($model->getErrors());exit();
+        $place_name = Yii::$app->request->post('input');
+        if ($place_name) {
+            $model->place_name = $place_name;
+            $model->save();
+            return $this->redirect(['/m-meeting/view', 'id' => $model->meeting_id]);
+        }else{
+            var_dump($model->getErrors());
+            //exit();
+        }
+
         return $this->render('update', [
             'model' => $model,
         ]);

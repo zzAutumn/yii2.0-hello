@@ -30,10 +30,7 @@ $timeCount = $timeProvider->count;
         <div class="panel-body">
             <?= $model->message ?>
 
-
         </div>
-
-
 
         <div class="panel-footer">
             <div class="row">
@@ -97,26 +94,13 @@ $timeCount = $timeProvider->count;
                 <?= Html::a('', ['participant/create', 'meeting_id' => $model->id], ['class' => 'btn btn-primary  glyphicon glyphicon-plus']) ?>
                 <?= Html::a('', ['participant/update', 'meeting_id' => $model->id], ['class' => 'btn btn-primary  glyphicon glyphicon-pencil']) ?>
             </div>
-            <table class="table">
-                <thead>
-                <tr class="small-header">
-                    <td></td>
-                    <td >You</td>
-                    <td >Them</td>
-                    <td >
-                        <?php
-                        if ($participantProvider->count>1) echo 'Choose';
-                        ?>
-                </tr>
-                </thead>
+
             <?= ListView::widget([
                 'dataProvider' => $participantProvider,
                 'itemOptions' => ['class' => 'item'],
                 'layout' => '{items}',
                 'itemView' => '../participant/_list',
             ]) ?>
-
-            </table>
 
         </div>
 
@@ -143,30 +127,6 @@ $timeCount = $timeProvider->count;
 
 
 
-
-    <!--<h3>Places</h3>
-    <?/*= ListView::widget([
-        'dataProvider' => $placeProvider,
-        'itemOptions' => ['class' => 'item'],
-        'layout' => '{items}',
-        'itemView' => '../meeting-place/_list',
-    ]) */?>
-
-    <h3>Dates &amp; Times</h3>
-    <?/*= ListView::widget([
-        'dataProvider' => $timeProvider,
-        'itemOptions' => ['class' => 'item'],
-        'layout' => '{items}',
-        'itemView' => '../meeting-time/_list',
-    ]) */?>
-
-    <h3>Note</h3>
-    --><?/*= ListView::widget([
-        'dataProvider' => $noteProvider,
-        'itemOptions' => ['class' => 'item'],
-        'layout' => '{items}',
-        'itemView' => '../meeting-note/_list',
-    ]) */?>
 
 
 
